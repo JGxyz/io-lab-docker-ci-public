@@ -1,8 +1,6 @@
 # Git repo metadata
 TAG = $(shell git describe --tags --always)
-# TODO: if your docher hub account name is different then this on github ovrwrite this this variable with docer hub accout name
 PREFIX = $(shell git config --get remote.origin.url | tr ':.' '/'  | rev | cut -d '/' -f 3 | rev)
-# TODO: if your repository name is different then this github repository name on ovrwrite this variable with docer hub repo name
 REPO_NAME = $(shell git config --get remote.origin.url | tr ':.' '/'  | rev | cut -d '/' -f 2 | rev)
 
 # Image metadata
@@ -29,7 +27,7 @@ all: push
 
 image:
   # TODO: this build command is incomplete, add last flag of this command that tags image as latest upon building it
-	docker build \
+	docker build  \
 		--build-arg SCHEMA_NAME="$(SCHEMA_NAME)" \
 		--build-arg SCHEMA_DESCRIPTION="$(SCHEMA_DESCRIPTION)" \
 		--build-arg SCHEMA_URL="$(SCHEMA_URL)" \
@@ -41,11 +39,13 @@ image:
 		--build-arg SCHEMA_CMD="$(SCHEMA_CMD)" \
 		--tag jgxyz/io-lab-docker-ci .
 
+	docker tag jgxyz/io-lab-docker-ci jgxyz/io-lab-docker-ci:abcd
   # TODO: last part of this command that tags just built image with a specyfic tag
-       docker tag jgxyz/io-lab-docker-ci jgxyz/io-lab-docker-ci:v1.0	
+	
 push: image
 	# TODO: two commands, first pushes the latest image, second pushes the image tagged with specyfic tag
-	
+	docker push jgxyz/io-lab-docker-ci:latest
+	docker push jgxyz/io-lab-docker-ci:abcd	
 clean:
 
 .PHONY: clean image push all

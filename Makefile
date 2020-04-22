@@ -39,9 +39,10 @@ image:
 		--build-arg SCHEMA_BUILD_DATE="$(SCHEMA_BUILD_DATE)" \
 		--build-arg SCHEMA_BUILD_VERSION="$(SCHEMA_BUILD_VERSION)" \
 		--build-arg SCHEMA_CMD="$(SCHEMA_CMD)" \
-	
+		--tag jgxyz/io-lab-docker-ci .
+
   # TODO: last part of this command that tags just built image with a specyfic tag
-	
+       docker tag jgxyz/io-lab-docker-ci jgxyz/io-lab-docker-ci:v1.0	
 push: image
 	# TODO: two commands, first pushes the latest image, second pushes the image tagged with specyfic tag
 	
